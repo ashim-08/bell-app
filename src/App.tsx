@@ -34,22 +34,27 @@ function App() {
 
   const setupMotionListener = () => {
     let lastX = 0, lastY = 0, lastZ = 0;
+    let lastUpdate = 0;
 
     const handleMotion = (event: DeviceMotionEvent) => {
       const acc = event.accelerationIncludingGravity;
       if (!acc || !acc.x || !acc.y || !acc.z) return;
 
-      const deltaX = Math.abs(acc.x - lastX);
-      const deltaY = Math.abs(acc.y - lastY);
-      const deltaZ = Math.abs(acc.z - lastZ);
+      const currentTime = Date.now();
+      if ((currentTime - lastUpdate) > 100) {
+        const diffTime = currentTime - lastUpdate;
+        lastUpdate = currentTime;
 
-      if (deltaX + deltaY + deltaZ > SHAKE_THRESHOLD) {
-        ringBell();
+        const speed = Math.abs(acc.x + acc.y + acc.z - lastX - lastY - lastZ) / diffTime * 10000;
+
+        if (speed > SHAKE_THRESHOLD) {
+          ringBell();
+        }
+
+        lastX = acc.x;
+        lastY = acc.y;
+        lastZ = acc.z;
       }
-
-      lastX = acc.x;
-      lastY = acc.y;
-      lastZ = acc.z;
     };
 
     window.addEventListener('devicemotion', handleMotion);
