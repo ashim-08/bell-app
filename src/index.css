@@ -1,3 +1,109 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary: #0094da;
+  --primary-dark: #0077b3;
+  --primary-light: #33a8e3;
+  --shadow: rgba(0, 0, 0, 0.15);
+}
+
+body {
+  background: var(--primary);
+  /* Ambient background effect handled in App wrapper or body here if we could, 
+     but React root is usually inside body. We'll add this style to the main div in App often,
+     but let's keep the global defaults here too. */
+  font-family: "Crimson Text", "Georgia", serif;
+}
+
+/* Ripple effect on ring */
+@keyframes ripple-animation {
+  from {
+    width: 60%;
+    height: 60%;
+    opacity: 1;
+  }
+  to {
+    width: 120%;
+    height: 120%;
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 148, 218, 0.4);
+  animation: ripple-animation 1s ease-out forwards;
+  pointer-events: none;
+}
+
+/* Swing animation keyframes */
+@keyframes swing-light {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes swing-medium {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(6deg);
+  }
+  75% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes swing-heavy {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes swing-intense {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+}
+
+.swing-light {
+  animation: swing-light 0.8s ease-in-out;
+}
+
+.swing-medium {
+  animation: swing-medium 0.7s ease-in-out;
+}
+
+.swing-heavy {
+  animation: swing-heavy 0.6s ease-in-out;
+}
+
+.swing-intense {
+  animation: swing-intense 0.5s ease-in-out;
+}
